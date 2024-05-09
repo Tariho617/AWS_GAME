@@ -16,8 +16,8 @@ class CreateUserProfileTable extends Migration
         Schema::create('user_profile', function (Blueprint $table) {
             $table->string('user_id', 37)->charset('utf8');
 			$table->string('user_name', 32)->charset('utf8');
-			$table->unsignedInteger('banana')->default(0);
-			$table->unsignedInteger('banana_free')->default(0);
+			$table->unsignedInteger('jewel')->default(0);
+			$table->unsignedInteger('jewel_free')->default(0);
 			$table->unsignedInteger('friend_coin')->default(0);
 			$table->unsignedSmallInteger('tutorial_progress')->default(0);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
