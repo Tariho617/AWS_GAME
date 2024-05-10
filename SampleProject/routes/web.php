@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('api/registration', 'RegistrationController@Registration');
+Route::get('api/login', 'LoginController@Login');
