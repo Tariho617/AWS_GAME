@@ -17,3 +17,4 @@ class MasterDataController.php extends Controller
 
 		return json_encode($response);
 	}
+}
