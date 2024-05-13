@@ -19,8 +19,8 @@ class CreateUserLoginTable extends Migration
                 $table->string('user_id', 37)->charset('utf8')->primary();
                 $table->unsignedSmallInteger('login_day')->default(0);
                 $table->timestamp('last_login_at')->default('CURRENT_TIMESTAMP');
-                $table->timestamp('created_at')->default('CURRENT_TIMESTAMP');
-                $table->timestamp('updated_at')->default('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP');
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             });
         }
     }

@@ -22,8 +22,8 @@ class CreateUserProfileTable extends Migration
                 $table->unsignedInteger('jewel_free')->default(0);
                 $table->unsignedInteger('friend_coin')->default(0);
                 $table->unsignedSmallInteger('tutorial_progress')->default(0);
-                $table->timestamp('created_at')->default('CURRENT_TIMESTAMP');
-                $table->timestamp('updated_at')->default('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP');
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             });
         }
     }

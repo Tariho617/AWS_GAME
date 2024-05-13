@@ -20,8 +20,8 @@ class CreateMasterQuest extends Migration
                 $table->string('quest_name')->charset('utf8');
                 $table->string('quest_detail')->charset('utf8');
                 $table->Integer('quest_star')->default(0);
-                $table->timestamp('open_at')->default('CURRENT_TIMESTAMP');
-                $table->timestamp('close_at')->default('CURRENT_TIMESTAMP');
+                $table->timestamp('open_at')->useCurrent();
+                $table->timestamp('close_at')->useCurrent()->useCurrentOnUpdate();
                 $table->unsignedInteger('item_type')->default(0);
                 $table->unsignedInteger('item_count')->default(0);
             });
