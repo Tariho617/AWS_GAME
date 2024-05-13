@@ -17,8 +17,8 @@ class MasterDataService
     {
         // master_dataを追加
         $master_data_list = array();
-	$master_data_list['master_quest'] = MasterQuest::all();
-	$master_data_list['master_login_item'] = MasterLoginItem::all();
+	    $master_data_list['master_quest'] = MasterQuest::all();
+	    $master_data_list['master_login_item'] = MasterLoginItem::all();
 
         // JSONファイルを作成
         $json = json_encode($master_data_list);

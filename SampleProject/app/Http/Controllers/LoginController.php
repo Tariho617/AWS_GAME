@@ -21,10 +21,10 @@ class LoginController extends Controller
 			return config('error.ERROR_MASTER_DATA_UPDATE');
 		}
                 
-                //user_profileテーブルのレコードを取得
+        //user_profileテーブルのレコードを取得
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
 
-                //レコード存在チェック
+        //レコード存在チェック
 		if(!$user_profile)
 		{
 			return config('error.ERROR_INVALID_DATA');		
@@ -45,7 +45,7 @@ class LoginController extends Controller
 		//日付の比較
 		$today = date('Y-m-d');
 		$last_login_day = date('Y-m-d', strtotime($user_login->last_login_at));
-		if(strtotime($today) !== strtotime($last_login_day))
+		if(strtotime($today) !== $last_login_day)
 		{
 			$user_login->login_day += 1;
 			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_login->login_day);
@@ -88,7 +88,7 @@ class LoginController extends Controller
 			$response = 
 				[
 					"user_profile" => $user_profile,
-					"user_profile" => $user_login
+					"user_login" => $user_login
 				];
 
 			return response()->json($response);
