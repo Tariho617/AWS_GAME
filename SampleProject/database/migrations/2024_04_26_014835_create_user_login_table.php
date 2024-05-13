@@ -13,14 +13,17 @@ class CreateUserLoginTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_login', function (Blueprint $table) {
-            $table->string('user_login', 37)->charset('utf8');
-	    $table->unsignedSmallInteger('login_day')->default(0);
-	    $table->timestamp('last_login_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-	    $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-	    $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
-	    $table->primary('user_id');
-        });
+        if(!Schema::hasTable('user_login'))
+        {
+            Schema::create('user_login', function (Blueprint $table) {
+                $table->string('user_login', 37)->charset('utf8');
+            $table->unsignedSmallInteger('login_day')->default(0);
+            $table->timestamp('last_login_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->primary('user_id');
+            });
+        }
     }
 
     /**

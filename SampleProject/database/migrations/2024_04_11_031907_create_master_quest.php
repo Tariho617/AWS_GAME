@@ -13,17 +13,20 @@ class CreateMasterQuest extends Migration
      */
     public function up()
     {
-        Schema::create('master_quest', function (Blueprint $table) {
-            $table->unsignedInteger('quest_id')->default(0);
-			$table->string('quest_name')->charset('utf8');
-			$table->string('quest_detail')->charset('utf8');
-			$table->Integer('quest_star')->default(0);
-            $table->timestamp('open_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('close_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-			$table->unsignedInteger('item_type')->default(0);
-			$table->unsignedInteger('item_count')->default(0);
-			$table->primary('quest_id');
-        });
+        if(!Schema::hasTable('master_quest'))
+        {
+            Schema::create('master_quest', function (Blueprint $table) {
+                $table->unsignedInteger('quest_id')->default(0);
+                $table->string('quest_name')->charset('utf8');
+                $table->string('quest_detail')->charset('utf8');
+                $table->Integer('quest_star')->default(0);
+                $table->timestamp('open_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('close_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->unsignedInteger('item_type')->default(0);
+                $table->unsignedInteger('item_count')->default(0);
+                $table->primary('quest_id');
+            });
+        }
     }
 
     /**
