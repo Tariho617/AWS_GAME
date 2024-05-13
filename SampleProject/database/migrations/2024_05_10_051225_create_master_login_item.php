@@ -13,7 +13,12 @@ class MasterLoginItem extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('master_login_item', function (Blueprint $table)
+        {
+            $table->unsignedSmallInteger('login_day')->default(0);
+            $table->unsignedSmallInteger('item_type')->default(0);
+            $table->unsignedSmallInteger('item_count')->default(0);
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class MasterLoginItem extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('master_login_item');
     }
 }
