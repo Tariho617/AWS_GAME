@@ -3,8 +3,8 @@
 namespace App\Libs;
 
 use Illuminate\Support\Facades\File;
-use App\MasterQuest;
-use App\MasterLoginItem;
+use App\Models\MasterQuest;
+use App\Models\MasterLoginItem;
 
 class MasterDataService
 {

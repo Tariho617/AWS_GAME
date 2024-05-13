@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MasterLoginItem;
 
-class MasterDataController.php extends Controller
+class MasterDataController extends Controller
 {
 	public function Get(Request $request)
 	{

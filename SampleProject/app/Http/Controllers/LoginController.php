@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libs\MasterDataService;
-use App\UserProfile;
-use App\UserLogin;
-use App\MasterLoginItem;
+use App\Models\UserProfile;
+use App\Models\UserLogin;
+use App\Models\MasterLoginItem;
 
 class LoginController extends Controller
 {
