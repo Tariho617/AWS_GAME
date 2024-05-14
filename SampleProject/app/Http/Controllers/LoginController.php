@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Illuminate\Http\Request;
 use App\Libs\MasterDataService;
 use App\Models\UserProfile;
@@ -12,6 +14,9 @@ class LoginController extends Controller
 {
 	public function Login(Request $request)
 	{
+		$log = new Logger('debug');
+		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/debug/loginDebug.log', Logger::DEBUG));
+		
 		$client_master_version = $request->client_master_version;
 		$user_id = $request->user_id;
 
@@ -79,13 +84,14 @@ class LoginController extends Controller
 				$user_profile->save();
 				$user_login->save();
 			}
-			catch(\PDOException $e)
+			catch(\PDOException $error)
 			{
+				$log->warning($error);
 				return config('error.ERROR_DB_UPDATE');
 			}
 
-			//クライアントへのレスポンス
-			$response = 
+				//クライアントへのレスポンス
+				$response = 
 				[
 					"user_profile" => $user_profile,
 					"user_login" => $user_login
