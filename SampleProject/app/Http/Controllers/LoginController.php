@@ -23,6 +23,7 @@ class LoginController extends Controller
 		//マスターデータチェック
 		if(!MasterDataService::CheckMasterDataVersion($client_master_version))
 		{
+			$log->warning(config(('error.ERROR_MASTER_DATA_UPDATE')));
 			return config('error.ERROR_MASTER_DATA_UPDATE');
 		}
                 
@@ -32,6 +33,7 @@ class LoginController extends Controller
         //レコード存在チェック
 		if(!$user_profile)
 		{
+			$log->warning(config('error.ERROR_INVALID_DATA'));
 			return config('error.ERROR_INVALID_DATA');		
 		}
 
