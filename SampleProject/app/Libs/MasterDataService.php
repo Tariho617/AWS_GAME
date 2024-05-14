@@ -2,6 +2,8 @@
 
 namespace App\Libs;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\File;
 use App\Models\MasterQuest;
 use App\Models\MasterLoginItem;
@@ -33,17 +35,32 @@ class MasterDataService
      */
     public static function GetMasterData($data_name)
     {
+        $log = new Logger('debug');
+        $log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/logs/debug/debug.log', Logger::DEBUG));
+
         $version = config('constants.MASTER_DATA_VERSION');
         $path = storage_path('app/' . $version . '.json');
 
         if (!File::exists($path)) {
+            $log->warning('Master data file not found: '. $path);
             return false;
         }
 
         $json = File::get($path);
         $data = json_decode($json, true);
 
-        return isset($data[$data_name]) ? $data[$data_name] : false;
+        if($data == null)
+        {
+            $log->warning('Failed to decode JSON data from file '. $path);
+            return false;
+        }
+
+        if(!isset($data[$data_name]))
+        {
+            $log->warning('Master data key not found: '. $data_name);
+        }
+
+        return $data[$data_name];
     }
 
     /**
