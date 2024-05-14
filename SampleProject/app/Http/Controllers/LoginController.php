@@ -15,7 +15,7 @@ class LoginController extends Controller
 	public function Login(Request $request)
 	{
 		$log = new Logger('debug');
-		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/debug/loginDebug.log', Logger::DEBUG));
+		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/logs/debug/loginDebug.log', Logger::DEBUG));
 		
 		$client_master_version = $request->client_master_version;
 		$user_id = $request->user_id;
