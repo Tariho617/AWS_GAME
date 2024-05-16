@@ -14,6 +14,8 @@ class LoginController extends Controller
 {
 	public function Login(Request $request)
 	{
+		date_default_timezone_set('Asia/Tokyo');
+
 		$log = new Logger('debug');
 		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/logs/debug/loginDebug.log', Logger::DEBUG));
 		
@@ -54,6 +56,9 @@ class LoginController extends Controller
 		$last_login_day = date('Y-m-d', strtotime($user_login->last_login_at));
 		if(strtotime($today) !== $last_login_day)
 		{
+			$log->debug("today: ".$today);
+			$log->debug("last_login_day".$last_login_day);
+
 			$user_login->login_day += 1;
 			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_login->login_day);
 
