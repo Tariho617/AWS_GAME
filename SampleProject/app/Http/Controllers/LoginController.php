@@ -56,7 +56,7 @@ class LoginController extends Controller
 		$last_login_day = date('Y-m-d', strtotime($user_login->last_login_at));
 		if(strtotime($today) !== $last_login_day)
 		{
-			$log->debug("today: ".$today);
+			$log->debug("today: ".strtotime($today));
 			$log->debug("last_login_day".$last_login_day);
 
 			$user_login->login_day += 1;
