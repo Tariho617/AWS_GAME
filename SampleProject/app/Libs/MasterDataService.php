@@ -57,6 +57,7 @@ class MasterDataService
 
         if(!isset($data[$data_name]))
         {
+            $log->debug('$data: '. $data);
             $log->warning('Master data key not found: '. $data_name);
             return false;
         }
