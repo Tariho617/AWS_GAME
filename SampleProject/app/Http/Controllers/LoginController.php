@@ -55,10 +55,9 @@ class LoginController extends Controller
 		$today = date('Y-m-d');
 		$log->debug("today: ".$today);
 		$last_login_day = date('Y-m-d', strtotime($user_login->last_login_at));
+		$log->debug("last_login_day".$last_login_day);
 		if($today !== $last_login_day)
 		{
-			$log->debug("last_login_day".$last_login_day);
-
 			$user_login->login_day += 1;
 			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_login->login_day);
 
