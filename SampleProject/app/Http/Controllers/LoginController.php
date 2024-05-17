@@ -46,7 +46,7 @@ class LoginController extends Controller
 			//初期値の設定
 			$user_login = new UserLogin;
 			$user_login->user_id = $user_id;
-			$timestamp = date('Y-m-d H:i:s');
+			$timestamp = strtotime(date('Y-m-d H:i:s'));
 			$user_login->login_day = 0;
 			$last_login_at = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, 2000));
 			$user_login->last_login_at = $last_login_at;
