@@ -87,6 +87,7 @@ class LoginController extends Controller
 			//ユーザープロファイルとログイン情報を保存し、クライアントにレスポンスを返す
 			try
 			{
+				$log->debug('トライしてる');
 				$user_profile->save();
 				$user_login->save();
 			}
