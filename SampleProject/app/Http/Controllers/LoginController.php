@@ -58,6 +58,7 @@ class LoginController extends Controller
 		$log->debug("last_login_day".$last_login_day);
 		if($today !== $last_login_day)
 		{
+			$log->debug("ログイン日数更新");
 			$user_login->login_day += 1;
 			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_login->login_day);
 
@@ -93,6 +94,7 @@ class LoginController extends Controller
 			}
 			catch(\PDOException $error)
 			{
+				$log->debug(("エラーしてる"));
 				$log->warning($error);
 				return config('error.ERROR_DB_UPDATE');
 			}
