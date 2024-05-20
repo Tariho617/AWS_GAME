@@ -81,7 +81,7 @@ class LoginController extends Controller
 					   break;
 				}
 			}
-
+			$log->debug(("アイテムデータ確認終わり"));
 			//ログイン時刻の更新
 			$user_login->last_login_at = date("Y-m-d H:i:s");
 
