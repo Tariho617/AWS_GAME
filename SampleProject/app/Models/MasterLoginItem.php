@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Illuminate\Database\Eloquent\Model;
 use App\Libs\MasterDataService;
 
@@ -30,6 +32,8 @@ class MasterLoginItem extends Model
 				return $master_login_item;
 			}
 		}
+		$log = new Logger('debug');
+		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/logs/debug/loginDebug.log', Logger::DEBUG));
 		return null;
 	}
 }
