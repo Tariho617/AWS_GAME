@@ -7,7 +7,6 @@ use Monolog\Handler\StreamHandler;
 use Illuminate\Http\Request;
 use App\Libs\MasterDataService;
 use App\Models\UserProfile;
-use App\Models\UserLogin;
 use App\Models\MasterLoginItem;
 
 class LoginController extends Controller
@@ -25,7 +24,7 @@ class LoginController extends Controller
 		//マスターデータチェック
 		if(!MasterDataService::CheckMasterDataVersion($client_master_version))
 		{
-			$log->warning(config(('error.ERROR_MASTER_DATA_UPDATE')));
+			$log->warning(config(('error.ERROR_MASTER_DATA_UPDATE '.'ClientVer: '.$client_master_version)));
 			return config('error.ERROR_MASTER_DATA_UPDATE');
 		}
                 
