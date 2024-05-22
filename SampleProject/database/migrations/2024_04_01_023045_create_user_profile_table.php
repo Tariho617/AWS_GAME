@@ -18,6 +18,8 @@ class CreateUserProfileTable extends Migration
             Schema::create('user_profile', function (Blueprint $table) {
                 $table->string('user_id', 37)->charset('utf8')->primary();
                 $table->string('user_name', 32)->charset('utf8');
+                $table->unsignedSmallInteger('login_day')->default(0);
+                $table->timestamp('last_login_at')->useCurrent();
                 $table->unsignedInteger('jewel')->default(0);
                 $table->unsignedInteger('jewel_free')->default(0);
                 $table->unsignedInteger('friend_coin')->default(0);

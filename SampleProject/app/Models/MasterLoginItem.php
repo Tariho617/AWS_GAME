@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use Illuminate\Database\Eloquent\Model;
 use App\Libs\MasterDataService;
 
@@ -20,9 +18,6 @@ class MasterLoginItem extends Model
 
 	public static function GetMasterLoginItemByLoginDay($login_day)
 	{
-		$log = new Logger('debug');
-		$log->pushHandler(new StreamHandler('/var/www/html/SampleProject/storage/logs/debug/loginDebug.log', Logger::DEBUG));
-
 		$master_data_list = self::GetMasterLoginItem();
 		foreach($master_data_list as $master_data)
 		{
@@ -35,7 +30,6 @@ class MasterLoginItem extends Model
 				return $master_login_item;
 			}
 		}
-		$log->debug("nullだよ");
 		return null;
 	}
 }

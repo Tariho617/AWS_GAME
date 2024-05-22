@@ -17,7 +17,7 @@ class CreateMasterLoginItem extends Migration
         {
             Schema::create('master_login_item', function (Blueprint $table)
             {
-                $table->unsignedSmallInteger('login_day')->default(0);
+                $table->unsignedSmallInteger('login_day')->default(0)->primary();
                 $table->unsignedSmallInteger('item_type')->default(0);
                 $table->unsignedSmallInteger('item_count')->default(0);
             });

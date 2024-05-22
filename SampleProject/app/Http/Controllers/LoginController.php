@@ -40,27 +40,26 @@ class LoginController extends Controller
 		}
 
 		//ログインボーナステーブルのレコードを取得
-		$user_login = UserLogin::where('user_id', $user_id)->first();
-		if(!$user_login)
+		if(!$user_profile->last_login_at)
 		{
 			//初期値の設定
-			$user_login = new UserLogin;
-			$user_login->user_id = $user_id;
-			$user_login->login_day = 0;
+			$user_profile = new UserProfile();
+			$user_profile->user_id = $user_id;
+			$user_profile->login_day = 0;
 			$last_login_at = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, 2000));
-			$user_login->last_login_at = $last_login_at;
+			$user_profile->last_login_at = $last_login_at;
 		}
 
 		//日付の比較
 		$today = date('Y-m-d');
 		$log->debug("today: ".$today);
-		$last_login_day = date('Y-m-d', strtotime($user_login->last_login_at));
+		$last_login_day = date('Y-m-d', strtotime($user_profile->last_login_at));
 		$log->debug("last_login_day".$last_login_day);
 		if($today !== $last_login_day)
 		{
 			$log->debug("ログイン日数更新");
-			$user_login->login_day += 1;
-			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_login->login_day);
+			$user_profile->login_day += 1;
+			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_profile->login_day);
 
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
@@ -84,14 +83,13 @@ class LoginController extends Controller
 		}
 			$log->debug(("アイテムデータ確認終わり"));
 			//ログイン時刻の更新
-			$user_login->last_login_at = date("Y-m-d H:i:s");
+			$user_profile->last_login_at = date("Y-m-d H:i:s");
 
 			//ユーザープロファイルとログイン情報を保存し、クライアントにレスポンスを返す
 			try
 			{
 				$log->debug('トライしてる');
 				$user_profile->save();
-				$user_login->save();
 			}
 			catch(\PDOException $error)
 			{
@@ -104,10 +102,8 @@ class LoginController extends Controller
 				$response = 
 				[
 					"user_profile" => $user_profile,
-					"user_login" => $user_login
 				];
 
 			return response()->json($response);
-		
 	}
 }
