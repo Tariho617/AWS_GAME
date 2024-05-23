@@ -28,11 +28,12 @@ class LoginController extends Controller
 			return config('error.ERROR_MASTER_DATA_UPDATE');
 		}
                 
-        //user_profileテーブルのレコードを取得
+        //user_profileとmaster_login_itemのテーブルのレコードを取得
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
+		$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day)->first();
 
         //レコード存在チェック
-		if(!$user_profile)
+		if(!$user_profile || !$master_login_item)
 		{
 			$log->warning(config('error.ERROR_INVALID_DATA'));
 			return config('error.ERROR_INVALID_DATA');		
@@ -54,13 +55,13 @@ class LoginController extends Controller
 		$log->debug("today: ".$today);
 		$last_login_day = date('Y-m-d', strtotime($user_profile->last_login_at));
 		$log->debug("last_login_day: ".$last_login_day);
+
 		if($today !== $last_login_day)
 		{
 			//ログイン日数を更新し、その日のログインボーナス
 			$log->debug("ログイン日数更新");
 			$user_profile->login_day += 1;
-			$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day)->first();
-			$log->debug($master_login_item->item_type);
+			$log->debug('itemType : '.$master_login_item->item_type);
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
 			{
