@@ -58,8 +58,9 @@ class LoginController extends Controller
 		{
 			//ログイン日数を更新し、その日のログインボーナス
 			$log->debug("ログイン日数更新");
+			$log->debug('BeforeLoginday: '.$user_profile->login_day);
 			$user_profile->login_day += 1;
-			$log->debug('UpdateLoginday'.$user_profile->login_day);
+			$log->debug('UpdateLoginday: '.$user_profile->login_day);
 			$log->debug('itemType : '.$master_login_item->item_type);
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
