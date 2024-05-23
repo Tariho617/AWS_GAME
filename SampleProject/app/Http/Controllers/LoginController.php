@@ -32,6 +32,7 @@ class LoginController extends Controller
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
 		$log->debug('loginday: '.$user_profile->login_day);
 		$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day + 1)->first();
+		$log->debug('gotMasterLoginItemloginday: '.$user_profile->login_day);
 
         //レコード存在チェック
 		if(!$user_profile || !$master_login_item)
