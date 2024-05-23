@@ -38,8 +38,8 @@ class LoginController extends Controller
 			return config('error.ERROR_INVALID_DATA');		
 		}
 
-		//ログインボーナステーブルのレコードを取得
-		if(!$user_profile->last_login_at)
+		//初回ログイン時のみ実行される
+		if(!$user_profile || !$user_profile->last_login_at)
 		{
 			//初期値の設定
 			$user_profile = new UserProfile();
@@ -53,12 +53,13 @@ class LoginController extends Controller
 		$today = date('Y-m-d');
 		$log->debug("today: ".$today);
 		$last_login_day = date('Y-m-d', strtotime($user_profile->last_login_at));
-		$log->debug("last_login_day".$last_login_day);
+		$log->debug("last_login_day: ".$last_login_day);
 		if($today !== $last_login_day)
 		{
+			//ログイン日数を更新し、その日のログインボーナス
 			$log->debug("ログイン日数更新");
 			$user_profile->login_day += 1;
-			$master_login_item = MasterLoginItem::GetMasterLoginItemByLoginDay($user_profile->login_day);
+			$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day)->first();
 
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
@@ -79,6 +80,11 @@ class LoginController extends Controller
 					   break;
 				}
 			}
+			else
+			{
+				$log->error('アイテムのレコードがないよ');
+				return config('error.ERROR_NOTFOUND_ITEM');
+			}
 		}
 			$log->debug(("アイテムデータ確認終わり"));
 			//ログイン時刻の更新
@@ -89,11 +95,12 @@ class LoginController extends Controller
 			{
 				$log->debug('トライしてる');
 				$user_profile->save();
+				$master_login_item->save();
 			}
 			catch(\PDOException $error)
 			{
 				$log->debug(("エラーしてる"));
-				$log->warning($error);
+				$log->warning('PDOExeption'.$error);
 				return config('error.ERROR_DB_UPDATE');
 			}
 
@@ -101,6 +108,7 @@ class LoginController extends Controller
 				$response = 
 				[
 					"user_profile" => $user_profile,
+					"master_login_item" => $master_login_item
 				];
 
 			return response()->json($response);
