@@ -35,8 +35,8 @@ class LoginController extends Controller
         //レコード存在チェック
 		if(!$user_profile || !$master_login_item)
 		{
-			$log->warning(config('error.ERROR_INVALID_DATA'));
-			return config('error.ERROR_INVALID_DATA');		
+			$log->warning(config('error.ERROR_INVALID_DATA').'user_profile: '.$user_profile .'master_login_item: '.$master_login_item);
+			return config('error.ERROR_INVALID_DATA');
 		}
 
 		//初回ログイン時のみ実行される
