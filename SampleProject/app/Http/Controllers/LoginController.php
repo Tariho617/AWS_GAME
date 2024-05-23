@@ -60,7 +60,7 @@ class LoginController extends Controller
 			$log->debug("ログイン日数更新");
 			$user_profile->login_day += 1;
 			$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day)->first();
-
+			$log->debug($master_login_item->item_type);
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
 			{
