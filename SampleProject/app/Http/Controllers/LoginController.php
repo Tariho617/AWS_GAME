@@ -30,12 +30,13 @@ class LoginController extends Controller
                 
         //user_profileとmaster_login_itemのテーブルのレコードを取得
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
+		$log->debug('loginday: '.$user_profile->login_day);
 		$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day)->first();
 
         //レコード存在チェック
 		if(!$user_profile || !$master_login_item)
 		{
-			$log->warning(config('error.ERROR_INVALID_DATA').'user_profile: '.$user_profile .'master_login_item: '.$master_login_item);
+			$log->warning(config('error.ERROR_INVALID_DATA').' user_profile: '.$user_profile .'master_login_item: '.$master_login_item);
 			return config('error.ERROR_INVALID_DATA');
 		}
 
