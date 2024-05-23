@@ -32,7 +32,6 @@ class LoginController extends Controller
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
 		$log->debug('loginday: '.$user_profile->login_day);
 		$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day + 1)->first();
-		$log->debug('gotMasterLoginItemloginday: '.$user_profile->login_day);
 
         //レコード存在チェック
 		if(!$user_profile || !$master_login_item)
@@ -60,6 +59,7 @@ class LoginController extends Controller
 			//ログイン日数を更新し、その日のログインボーナス
 			$log->debug("ログイン日数更新");
 			$user_profile->login_day += 1;
+			$log->debug('UpdateLoginday'.$user_profile->login_day);
 			$log->debug('itemType : '.$master_login_item->item_type);
 			//アイテムデータがあるか確認
 			if(!is_null($master_login_item))
