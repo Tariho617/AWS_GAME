@@ -40,12 +40,9 @@ class LoginController extends Controller
 		}
 
 		//初回ログイン時のみ実行される
-		if(!$user_profile || !$user_profile->last_login_at)
+		if($user_profile->login_day == 0)
 		{
 			//初期値の設定
-			$user_profile = new UserProfile();
-			$user_profile->user_id = $user_id;
-			$user_profile->login_day = 0;
 			$last_login_at = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, 2000));
 			$user_profile->last_login_at = $last_login_at;
 		}
