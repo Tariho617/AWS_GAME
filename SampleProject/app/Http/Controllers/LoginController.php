@@ -30,7 +30,7 @@ class LoginController extends Controller
                 
         //user_profileとmaster_login_itemのテーブルのレコードを取得
 		$user_profile = UserProfile::where('user_id', $user_id)->first();
-		$log->debug('loginday: '.$user_profile->login_day);
+		$log->debug('loginday: '.$user_profile->login_day + 1);
 		$master_login_item = MasterLoginItem::where('login_day', $user_profile->login_day + 1)->first();
 
         //レコード存在チェック
@@ -86,6 +86,11 @@ class LoginController extends Controller
 				$log->error('アイテムのレコードがないよ');
 				return config('error.ERROR_NOTFOUND_ITEM');
 			}
+		}
+		else
+		{
+			$log->debug("同日ログイン");
+			return;
 		}
 			$log->debug(("アイテムデータ確認終わり"));
 			//ログイン時刻の更新
