@@ -86,15 +86,25 @@ class LoginController extends Controller
 				$log->error('アイテムのレコードがないよ');
 				return config('error.ERROR_NOTFOUND_ITEM');
 			}
+
+			//ログイン時刻の更新
+			$user_profile->last_login_at = date("Y-m-d H:i:s");
 		}
 		else
 		{
+			// 同日ログインのときはログインアイテムを返さず
+			// ユーザープロファイルのみを更新して返す
 			$log->debug("同日ログイン");
-			return;
+			
+			$user_profile->save();
+
+			$response = 
+			[
+				"user_profile" => $user_profile
+			];
+			return response()->json($response); 
 		}
 			$log->debug(("アイテムデータ確認終わり"));
-			//ログイン時刻の更新
-			$user_profile->last_login_at = date("Y-m-d H:i:s");
 
 			//ユーザープロファイルとログイン情報を保存し、クライアントにレスポンスを返す
 			try
